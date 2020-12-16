@@ -10,7 +10,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from sklearn.utils import check_array, check_consistent_length
 from sklearn.preprocessing import Binarizer
 
-from ..embed import selectSVD
+from ..embed import selectSVD, select_dimension
 from ..utils import import_graph, pass_to_ranks
 
 
@@ -859,6 +859,7 @@ def screeplot(
     figsize=(10, 5),
     cumulative=True,
     show_first=None,
+    n_elbows=4,
 ):
     r"""
     Plots the distribution of singular values for a matrix, either showing the
@@ -899,6 +900,10 @@ def screeplot(
         msg = "cumulative must be a boolean"
         raise TypeError(msg)
     _, D, _ = selectSVD(X, n_components=X.shape[1], algorithm="full")
+    elbows, values = select_dimension(
+        D[: int(np.ceil(np.log2(np.min(X.shape))))], n_elbows=n_elbows
+    )
+    values /= D.sum()
     D /= D.sum()
     if cumulative:
         y = np.cumsum(D[:show_first])
@@ -909,10 +914,11 @@ def screeplot(
     xlabel = "Component"
     ylabel = "Variance explained"
     with sns.plotting_context(context=context, font_scale=font_scale):
-        plt.plot(y)
+        plt.plot(np.arange(len(y)) + 1, y)
         plt.title(title)
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
+        plt.plot(elbows, values, color="red", marker="x", linewidth=0)
     return ax
 
 
