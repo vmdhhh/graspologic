@@ -1,3 +1,7 @@
+# test files
+_.py
+_.ipynb
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -65,7 +69,9 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+docs/_build
+docs/reference/_build/
+docs/tutorials/_build/
 
 # PyBuilder
 target/

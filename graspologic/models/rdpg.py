@@ -3,10 +3,10 @@
 
 import numpy as np
 
-from .base import BaseGraphEstimator
 from ..embed import AdjacencySpectralEmbed
 from ..simulations import p_from_latent
-from ..utils import import_graph, augment_diagonal, is_unweighted
+from ..utils import augment_diagonal, import_graph, is_unweighted
+from .base import BaseGraphEstimator
 
 
 class RDPGEstimator(BaseGraphEstimator):
@@ -26,7 +26,8 @@ class RDPGEstimator(BaseGraphEstimator):
     is undirected, then :math:`x_i = y_i`. Latent positions can be estimated via
     :class:`~graspologic.embed.AdjacencySpectralEmbed`.
 
-    Read more in the :ref:`tutorials <models_tutorials>`
+    Read more in the `Random Dot Product Graph (RDPG) Model Tutorial
+    <https://microsoft.github.io/graspologic/tutorials/simulations/rdpg.html>`_
 
     Parameters
     ----------

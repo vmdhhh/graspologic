@@ -2,17 +2,19 @@
 # Licensed under the MIT License.
 
 import sys
+
 import matplotlib as mpl
 
 from .plot import (
-    heatmap,
-    gridplot,
-    pairplot,
-    pairplot_with_gmm,
     degreeplot,
     edgeplot,
+    gridplot,
+    heatmap,
+    pairplot,
+    pairplot_with_gmm,
     screeplot,
 )
+from .plot_matrix import adjplot, matrixplot
 
 __all__ = [
     "heatmap",
@@ -22,4 +24,6 @@ __all__ = [
     "degreeplot",
     "edgeplot",
     "screeplot",
+    "adjplot",
+    "matrixplot",
 ]

@@ -2,9 +2,10 @@
 # Licensed under the MIT license.
 
 import math
-import networkx as nx
 from collections import defaultdict
 from typing import Any, Dict
+
+import networkx as nx
 
 
 def _modularity_component(
@@ -69,8 +70,8 @@ def modularity(
 
     Returns
     -------
-    Dict[int, float]
-        A dictionary of the community id to the modularity component of that community
+    float
+                The sum of the modularity of each of the communities.
 
     Raises
     ------

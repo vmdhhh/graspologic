@@ -2,12 +2,13 @@
 # Licensed under the MIT License.
 
 import warnings
+from typing import Optional
 
 import numpy as np
+from scipy.sparse import isspmatrix_csr
 
 from ..utils import import_graph, is_fully_connected
 from .base import BaseEmbedMulti
-from scipy.sparse import isspmatrix_csr
 
 
 def _get_omni_matrix(graphs):
@@ -52,7 +53,8 @@ class OmnibusEmbed(BaseEmbedMulti):
     :math:`M_{ij} = \frac{1}{2}(A_i + A_j)`. The omnibus matrix is then embedded
     using adjacency spectral embedding.
 
-    Read more in the :ref:`tutorials <embed_tutorials>`
+    Read more in the `Omnibus Embedding for Multiple Graphs Tutorial
+    <https://microsoft.github.io/graspologic/tutorials/embedding/Omnibus.html>`_
 
     Parameters
     ----------
@@ -96,6 +98,10 @@ class OmnibusEmbed(BaseEmbedMulti):
         If graph(s) are directed, whether to concatenate each graph's left and right (out and in) latent positions
         along axis 1.
 
+    svd_seed : int or None (default ``None``)
+        Only applicable for ``algorithm="randomized"``; allows you to seed the
+        randomized svd solver for deterministic, albeit pseudo-randomized behavior.
+
     Attributes
     ----------
     n_graphs_ : int
@@ -118,7 +124,7 @@ class OmnibusEmbed(BaseEmbedMulti):
 
     See Also
     --------
-    graspologic.embed.selectSVD
+    graspologic.embed.select_svd
     graspologic.embed.select_dimension
 
     References
@@ -138,6 +144,7 @@ class OmnibusEmbed(BaseEmbedMulti):
         check_lcc=True,
         diag_aug=True,
         concat=False,
+        svd_seed: Optional[int] = None,
     ):
         super().__init__(
             n_components=n_components,
@@ -147,6 +154,7 @@ class OmnibusEmbed(BaseEmbedMulti):
             check_lcc=check_lcc,
             diag_aug=diag_aug,
             concat=concat,
+            svd_seed=svd_seed,
         )
 
     def fit(self, graphs, y=None):
@@ -177,7 +185,7 @@ class OmnibusEmbed(BaseEmbedMulti):
                 msg = (
                     "Input graphs are not fully connected. Results may not"
                     + "be optimal. You can compute the largest connected component by"
-                    + "using ``graspologic.utils.get_multigraph_union_lcc``."
+                    + "using ``graspologic.utils.multigraph_lcc_union``."
                 )
                 warnings.warn(msg, UserWarning)
 

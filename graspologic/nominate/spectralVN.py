@@ -1,12 +1,13 @@
 # Copyright (c) Microsoft Corporation and contributors.
 # Licensed under the MIT License.
 
-from typing import Union, Tuple
-from ..embed import BaseSpectralEmbed
-from ..embed import AdjacencySpectralEmbed, LaplacianSpectralEmbed
+from typing import Tuple, Union
+
 import numpy as np
-from sklearn.neighbors import NearestNeighbors
 from sklearn.base import BaseEstimator
+from sklearn.neighbors import NearestNeighbors
+
+from ..embed import AdjacencySpectralEmbed, BaseSpectralEmbed, LaplacianSpectralEmbed
 
 
 class SpectralVertexNomination(BaseEstimator):
@@ -17,10 +18,11 @@ class SpectralVertexNomination(BaseEstimator):
     (the "seed"), Single Graph Vertex Nomination is the problem of ranking all :math:`V`
     in order of relation to members of :math:`S`. Spectral Vertex Nomination solves
     this problem by embedding :math:`G` into a low dimensional euclidean space
-    (:ref:`tutorials <embed_tutorials>`), and then generating a nomination list by some
-    distance based algorithm. In the simple unattributed case, for each seed vertex
-    :math:`u`, the other vertices are ranked in order of euclidean distance from
-    :math:`u`.
+    (see: `Adjacency Spectral Embed Tutorial
+    <https://microsoft.github.io/graspologic/tutorials/embedding/AdjacencySpectralEmbed.html>`_
+    ), and then generating a nomination list by some distance based algorithm. In the
+    simple unattributed case, for each seed vertex :math:`u`, the other vertices are
+    ranked in order of euclidean distance from :math:`u`.
 
     Parameters
     ----------
